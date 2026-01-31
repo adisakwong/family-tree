@@ -1,0 +1,29 @@
+/* css/style.css */
+.node:hover circle {
+    stroke: #ff5722;
+    stroke-width: 4px;
+    cursor: pointer;
+}
+
+.node text {
+    text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+#tree-container {
+    cursor: grab;
+}
+
+#tree-container:active {
+    cursor: grabbing;
+}
+
+/* Button styling for better visibility */
+.node button {
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.node button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}

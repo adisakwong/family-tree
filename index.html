@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .node circle { fill: #fff; stroke: #1976d2; stroke-width: 3px; }
+        .node text { font: 12px sans-serif; fill: #212121; }
+        .link { fill: none; stroke: #757575; stroke-width: 2px; }
+        .highlight { stroke: #d32f2f !important; stroke-width: 5px !important; }
+        #tree-container { 
+            width: calc(100% - 20px); 
+            height: 600px; 
+            border: 3px solid #0d47a1; 
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f5f9ff 0%, #e3f2fd 100%); 
+            box-shadow: inset 0 0 15px rgba(13, 71, 161, 0.2), 0 4px 12px rgba(0,0,0,0.15);
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-blue-100">
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Auth Section -->
+        <div id="auth-section" class="flex-grow flex items-center justify-center">
+            <!-- Login Card -->
+            <div id="login-card" class="bg-white p-8 rounded shadow-md w-96">
+                <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+                <input type="email" id="email" placeholder="Email" class="w-full p-2 border rounded mb-4">
+                <input type="password" id="password" placeholder="Password" class="w-full p-2 border rounded mb-4">
+                <button onclick="login()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Login</button>
+                <p class="mt-4 text-center text-sm">
+                    Don't have an account? <button onclick="toggleAuth('signup')" class="text-blue-500 hover:underline">Sign up</button>
+                </p>
+            </div>
+
+            <!-- Signup Card -->
+            <div id="signup-card" class="hidden bg-white p-8 rounded shadow-md w-96">
+                <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+                <input type="text" id="signup-name" placeholder="Display Name" class="w-full p-2 border rounded mb-4">
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-2 border rounded mb-4">
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-2 border rounded mb-4">
+                <button onclick="signup()" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">Sign Up</button>
+                <p class="mt-4 text-center text-sm">
+                    Already have an account? <button onclick="toggleAuth('login')" class="text-blue-500 hover:underline">Login</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Section -->
+        <div id="main-section" class="hidden flex flex-col h-screen">
+            <header class="bg-white shadow p-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold">Family Tree: <span id="current-family-name">Select a Family</span></h1>
+                <div class="flex space-x-4">
+                    <button onclick="showCreateFamilyModal()" class="bg-green-500 text-white px-4 py-2 rounded">New Family</button>
+                    <button onclick="logout()" class="text-red-500 underline">Logout</button>
+                </div>
+            </header>
+
+            <div class="flex flex-grow overflow-hidden">
+                <!-- Sidebar -->
+                <aside class="w-64 bg-white border-r p-4 flex flex-col">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-1">Search Member</label>
+                        <input type="text" id="search-input" oninput="searchMember()" placeholder="Type name..." class="w-full p-2 border rounded">
+                    </div>
+                    <div class="flex-grow overflow-y-auto">
+                        <h3 class="font-bold mb-2">My Families</h3>
+                        <ul id="family-list" class="space-y-2"></ul>
+                    </div>
+                    <div class="mt-6 border-t pt-4">
+                        <h3 class="font-bold mb-2">Reports</h3>
+                        <button onclick="showKinshipReport('intra')" class="w-full text-left p-2 hover:bg-gray-100 rounded text-sm">Intra-generation (Siblings)</button>
+                        <button onclick="showKinshipReport('inter')" class="w-full text-left p-2 hover:bg-gray-100 rounded text-sm">Inter-generation (Lineage)</button>
+                    </div>
+                </aside>
+
+                <!-- Visualization -->
+                <main class="flex-grow relative">
+                    <div id="tree-container"></div>
+                    <!-- Controls -->
+                    <div class="absolute bottom-4 right-4 flex space-x-2">
+                        <button onclick="toggleEditControls()" id="toggle-controls-btn" class="bg-gray-500 text-white p-3 rounded-full shadow-lg" title="Toggle Edit Controls">
+                            ✏️
+                        </button>
+                        <button onclick="addMemberNode()" class="bg-blue-500 text-white p-3 rounded-full shadow-lg">+</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals (Simplified) -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div id="modal-content" class="bg-white p-6 rounded shadow-lg max-w-md w-full"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/tree.js"></script>
+</body>
+</html>
