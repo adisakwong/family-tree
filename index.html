@@ -24,7 +24,7 @@
         }
     </style>
 </head>
-<body class="bg-blue-100">
+<body class="bg-gray-200">
     <div id="app" class="min-h-screen flex flex-col">
         <!-- Auth Section -->
         <div id="auth-section" class="flex-grow flex items-center justify-center">
@@ -54,7 +54,7 @@
 
         <!-- Main Section -->
         <div id="main-section" class="hidden flex flex-col h-screen">
-            <header class="bg-white shadow p-4 flex justify-between items-center">
+            <header class="bg-gray-200 shadow p-4 flex justify-between items-center">
                 <h1 class="text-xl font-bold">Family Tree: <span id="current-family-name">Select a Family</span></h1>
                 <div class="flex space-x-4">
                     <button onclick="showCreateFamilyModal()" class="bg-green-500 text-white px-4 py-2 rounded">New Family</button>
@@ -64,7 +64,7 @@
 
             <div class="flex flex-grow overflow-hidden">
                 <!-- Sidebar -->
-                <aside class="w-64 bg-white border-r p-4 flex flex-col">
+                <aside class="w-64 bg-gray-200 border-r p-4 flex flex-col">
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-1">Search Member</label>
                         <input type="text" id="search-input" oninput="searchMember()" placeholder="Type name..." class="w-full p-2 border rounded">
